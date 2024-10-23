@@ -11,17 +11,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
+  int selectedPageIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    DashBoard(),
-    ProfileScreen(),
-    ContactScreen(),
-  ];
 
-  void _onItemTapped(int index) {
+
+  void onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      selectedPageIndex = index;
     });
   }
 
@@ -29,10 +25,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Bottom NavigationBar'),
+          title: const Text('Bottom Navigation',style: TextStyle(
+            color: Colors.white
+          ),),
           backgroundColor: Colors.green),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: pages.elementAt(selectedPageIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
@@ -50,12 +48,20 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.blue,
             ),
           ],
-          type: BottomNavigationBarType.shifting,
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          //type: BottomNavigationBarType.shifting,
+          currentIndex: selectedPageIndex,
+          selectedItemColor: Colors.blue,
           iconSize: 40,
-          onTap: _onItemTapped,
-          elevation: 5),
+          onTap: onItemTapped,
+      ),
     );
   }
+
+
+  List<Widget> pages = <Widget>[
+    DashBoard(),
+    ProfileScreen(),
+    ContactScreen(),
+  ];
 }
